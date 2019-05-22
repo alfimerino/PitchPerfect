@@ -5,3 +5,15 @@ iPhone app that will allow users to record their voice and will then modulate th
 * Create Outlet and Action connections between the views and view controllers. Benefit from the power of Delegates by using them in code
 * Navigate between two scenes in the app using UINavigationController
 * Play audio files using AVFoundation’s AVAudioEngine class
+<div style="display:flex">
+     <div style="flex:1;padding-right:90px;">
+          <img src="PitchPerfectScreenshots/1.png" style="padding: 10px; float: right;" width=200>
+     </div>
+     <div style="flex:1;padding-left:90px;">
+         <img src="PitchPerfectScreenshots/2.png" style="padding: 10px; float: right;" width=200>
+     </div>
+     <div style="flex:1;padding-left:90px;">
+         <img src="PitchPerfectScreenshots/3.png" style="padding: 10px; float: right;" width=500>
+     </div>
+</div>
+
