@@ -33,20 +33,18 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         let recordingName = "recordedVoice.wav"
         let pathArray = [dirPath, recordingName]
         let filePath = URL(string: pathArray.joined(separator: "/"))
-        
         let session = AVAudioSession.sharedInstance()
         try! session.setCategory(AVAudioSession.Category.playAndRecord,
                                  mode: AVAudioSession.Mode.default,
                                  options: AVAudioSession.CategoryOptions.defaultToSpeaker)
-        
         
         try! audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])
         audioRecorder.delegate = self
         audioRecorder.isMeteringEnabled = true
         audioRecorder.prepareToRecord()
         audioRecorder.record()
-    
     }
+    
     @IBAction func stopRecording(_ sender: Any) {
         audioRecorder.stop()
         configureUI(isRecording: false)
@@ -54,27 +52,30 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         try! audioSession.setActive(false)
     }
     
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
+                                         successfully flag: Bool) {
         if flag {
-            performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
+            performSegue(withIdentifier: "stopRecording",
+                         sender: audioRecorder.url)
         }
         else {
-            let alert = UIAlertController(title: "Recording Failed", message: "An error occurred while attempting recording.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            let alert = UIAlertController(title: "Recording Failed",
+                                          message: "An error occurred while attempting recording.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK",comment: "Default action"),
+                                          style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
         }
     }
     
-    func configureUI(isRecording: Bool){
+    // MARK: - Helpers
+    func configureUI(isRecording: Bool) {
         if isRecording == false {
-            
-            
             recordingLabel.text = "Tap to Record"
             stopRecordingButton.isEnabled = false
             recordButton.isEnabled = true
-
         }
         else {
             recordingLabel.text = "Recording in Progress"
@@ -83,6 +84,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "stopRecording" {
             let playSoundsVC = segue.destination as! PlaySoundsViewController
@@ -90,6 +92,5 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             playSoundsVC.recordedAudioURL = recordedAudioURL
         }
     }
-    
 }
 
